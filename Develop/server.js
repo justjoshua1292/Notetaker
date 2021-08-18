@@ -9,16 +9,16 @@ const app = express();
 app.use(express.static('public'));
 
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 
 // routes
 
 // setting up API routes
 app.get('/api/notes', (req, res) => {
-   fs.readFile('./db/db.json', 'utf8', (err, data) => {
+    fs.readFile('./db/db.json', 'utf8', (err, data) => {
         res.json(JSON.parse(data))
-   })
+    })
 })
 
 app.post('/api/notes', (req, res) => {
@@ -26,31 +26,54 @@ app.post('/api/notes', (req, res) => {
     fs.readFile('./db/db.json', 'utf8', (err, data) => {
         const dbData = JSON.parse(data); // --> turn it into an array
 
+        // add an id to the req.body
+        req.body.id = dbData.length + 1;
+
         // add the req.body to the array
         dbData.push(req.body);
 
         fs.writeFile('./db/db.json', JSON.stringify(dbData), (err) => {
             res.send('Note has been added!')
         })
-   })
-   
-
-
+    })
 })
 
-// setting up HTML routes
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, './public/index.html'));
-})
+// How to create the app delete function - (For Bonus Points)
 
-app.get('/notes', (req, res) => {
-    res.sendFile(path.join(__dirname, './public/notes.html'));
-})
+app.delete("api/notes/:id", (req, res) => {
+    fs.readFile('./db/db.json', 'utf8', (err, data) => {
+        const dbData = JSON.parse(data); // --> turn it into an array
 
 
-app.listen(3001, () => {
-    console.log('App is now listening to PORT 3001!')
-})
+        // add the req.body to the array
+        // dbData.push(req.body);
+
+        // filter method array js to remove something
+
+        fs.writeFile('./db/db.json', JSON.stringify(dbData), (err) => {
+            res.send('Note has been added!')
+        })
+    })
+});
+
+
+
+
+    // setting up HTML routes
+    app.get('/notes', (req, res) => {
+        res.sendFile(path.join(__dirname, './public/notes.html'));
+    })
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, './public/index.html'));
+    })
+
+
+
+
+    app.listen(3001, () => {
+        console.log('App is now listening to PORT 3001!')
+    })
 
 
 /*
