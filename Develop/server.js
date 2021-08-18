@@ -8,6 +8,9 @@ const app = express();
 // middleware
 app.use(express.static('public'));
 
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
 
 // routes
 
@@ -16,6 +19,23 @@ app.get('/api/notes', (req, res) => {
    fs.readFile('./db/db.json', 'utf8', (err, data) => {
         res.json(JSON.parse(data))
    })
+})
+
+app.post('/api/notes', (req, res) => {
+
+    fs.readFile('./db/db.json', 'utf8', (err, data) => {
+        const dbData = JSON.parse(data); // --> turn it into an array
+
+        // add the req.body to the array
+        dbData.push(req.body);
+
+        fs.writeFile('./db/db.json', JSON.stringify(dbData), (err) => {
+            res.send('Note has been added!')
+        })
+   })
+   
+
+
 })
 
 // setting up HTML routes
