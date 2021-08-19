@@ -42,7 +42,7 @@ app.post('/api/notes', (req, res) => {
 
 app.delete("api/notes/:id", (req, res) => {
     fs.readFile('./db/db.json', 'utf8', (err, data) => {
-        const dbData = JSON.parse(data); // --> turn it into an array
+        const dbData = JSON.parse(data); // --> 
 
 
         // add the req.body to the array
