@@ -1,3 +1,4 @@
+const { notStrictEqual } = require('assert');
 const express = require('express');
 const fs = require('fs');
 const path = require('path')
@@ -38,24 +39,21 @@ app.post('/api/notes', (req, res) => {
     })
 })
 
-// How to create the app delete function - (For Bonus Points)
+// How to create the DELETE REQUESTS function - (For Bonus Points) 
 
 app.delete("api/notes/:id", (req, res) => {
-    fs.readFile('./db/db.json', 'utf8', (err, data) => {
-        const dbData = JSON.parse(data); // --> 
+             fs.readFile('./db/db.json', 'utf8', (err, data) => {
+                 const dbData = JSON.parse(data); 
 
-
-        // add the req.body to the array
-        // dbData.push(req.body);
-
-        // filter method array js to remove something
-
-        fs.writeFile('./db/db.json', JSON.stringify(dbData), (err) => {
-            res.send('Note has been added!')
-        })
-    })
-});
-
+                const filteredNotes = dbData.filter(function(note) {
+                    return note.id != req.params.id;
+           })
+       
+             fs.writeFile('./db/db.json', JSON.stringify(filteredNotes), (err) => {
+                      res.send('Note has been added!')
+                 })
+            })
+    });
 
 
 
