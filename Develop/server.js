@@ -1,6 +1,5 @@
 const { notStrictEqual } = require('assert');
 const express = require('express');
-const fs = require('fs');
 const path = require('path')
 
 // initialize an express application
@@ -41,19 +40,19 @@ app.post('/api/notes', (req, res) => {
 
 // How to create the DELETE REQUESTS function - (For Bonus Points) 
 
-app.delete("api/notes/:id", (req, res) => {
-             fs.readFile('./db/db.json', 'utf8', (err, data) => {
-                 const dbData = JSON.parse(data); 
+// app.delete("api/notes/:id", (req, res) => {
+//              fs.readFile('./db/db.json', 'utf8', (err, data) => {
+//                  const dbData = JSON.parse(data); 
 
-                const filteredNotes = dbData.filter(function(note) {
-                    return note.id != req.params.id;
-           })
+//                 const filteredNotes = dbData.filter(function(note) {
+//                     return note.id != req.params.id;
+//            })
        
-             fs.writeFile('./db/db.json', JSON.stringify(filteredNotes), (err) => {
-                      res.send('Note has been added!')
-                 })
-            })
-    });
+//              fs.writeFile('./db/db.json', JSON.stringify(filteredNotes), (err) => {
+//                       res.send('Note has been added!')
+//                  })
+//             })
+//     });
 
 
 
