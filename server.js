@@ -69,7 +69,7 @@ app.post('/api/notes', (req, res) => {
 
 
 
-    app.listen(3001, () => {
+    app.listen(process.env.PORT || 3001, () => {
         console.log('App is now listening to PORT 3001!')
     })
 
