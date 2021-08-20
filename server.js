@@ -42,7 +42,7 @@ app.post('/api/notes', (req, res) => {
 
 // How to create the DELETE REQUESTS  - (For Bonus Points) 
 
-app.delete("api/notes/:id", (req, res) => {
+app.delete("/api/notes/:id", (req, res) => {
              fs.readFile('./db/db.json', 'utf8', (err, data) => {
                  const dbData = JSON.parse(data); 
 
